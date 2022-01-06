@@ -7,7 +7,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
-from DES import Differential_Equation_Solver_new as DES
+from DES import Differential_Equation_Solver as DES
 
 
 # In[2]:
@@ -268,7 +268,7 @@ def driver1(ms,mixangle,ns):
             d_array1[i] = dPdtdE1*ns(Tcm,y[-1],ms,mixangle)*a**3*dtda
             
         return d_array1
-    a_array1, y_matrix1 = DES.destination_x(derivatives1, y_init, steps, d_steps, a_init, a_final)
+    a_array1, y_matrix1, dx = DES.destination_x_dx(derivatives1, y_init, steps, d_steps, a_init, a_final, 0.01)
     return a_array1,y_matrix1
 
 
@@ -305,7 +305,7 @@ def driver2(ms,mixangle,ns):
             d_array2[i] = dPdtdE2*ns(Tcm,y[-1],ms,mixangle)*a**3*dtda
               
         return d_array2
-    a_array2, y_matrix2 = DES.destination_x(derivatives2, y_init, steps, d_steps, a_init, a_final)
+    a_array2, y_matrix2, dx = DES.destination_x_dx(derivatives2, y_init, steps, d_steps, a_init, a_final, 0.01)
     return a_array2,y_matrix2
 
 
@@ -358,7 +358,7 @@ def driver3(ms,mixangle,ns):
             d_array3[i] = (dPdtdE3a+dPdtdE3b)*ns(Tcm,y[-1],ms,mixangle)*a**3*dtda #all the neutrinos (antineutrinos NOT included; just scale d6s and d7s differently if you want the antineutrinos)
               
         return d_array3
-    a_array3, y_matrix3 = DES.destination_x(derivatives3, y_init, steps, d_steps, a_init, a_final)
+    a_array3, y_matrix3, dx = DES.destination_x_dx(derivatives3, y_init, steps, d_steps, a_init, a_final, 0.01)
     return a_array3,y_matrix3
 
 
@@ -414,7 +414,7 @@ def driver4(ms,mixangle,ns):
             d_array4[i] = (dPdtdE4a+dPdtdE4b+dPdtdE4c)*ns(Tcm,y[-1],ms,mixangle)*a**3*dtda 
               
         return d_array4
-    a_array4, y_matrix4 = DES.destination_x(derivatives4, y_init, steps, d_steps, a_init, a_final)
+    a_array4, y_matrix4, dx = DES.destination_x_dx(derivatives4, y_init, steps, d_steps, a_init, a_final, 0.01)
     return a_array4,y_matrix4
 
 
@@ -469,7 +469,7 @@ def graph_final_num(ms,mixangle):
     plt.tick_params(axis='y', labelsize=20)
     plt.xlim(0,11*ms/20)
     plt.legend(loc="upper left",fontsize=20)
-    plt.savefig("NumberDensity.pdf")
+    plt.savefig("../PDFs/NumberDensity.pdf")
 
 
 # In[12]:
@@ -499,7 +499,7 @@ def graph_BR(mixangle):
     plt.xticks(np.linspace(50,500,10))
     plt.ylabel("Branching Ratio", fontsize = 20)
     plt.legend(loc=0, fontsize=20)
-    plt.savefig("Branchingratio.pdf")
+    plt.savefig("../PDFs/Branchingratio.pdf")
     
 def graph_mix_ms_t(ms1,ms2,mix1,mix2):
     n = 100
@@ -527,5 +527,5 @@ def graph_mix_ms_t(ms1,ms2,mix1,mix2):
     plt.xticks(np.linspace(2,10,5))
     plt.xlabel("Mixing Angle ($\\times 10^{-5}$ Radians)", fontsize=20)
     ax1.set_ylabel("Mass (MeV)", fontsize=20)
-    plt.savefig("DecayTimes.pdf")
+    plt.savefig("../PDFs/DecayTimes.pdf")
 
